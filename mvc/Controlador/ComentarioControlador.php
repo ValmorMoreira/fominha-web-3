@@ -20,7 +20,7 @@ class ComentarioControlador extends Controlador
         if ($comentario->isValido()) {
             $comentario->salvar();
 
-            DW3Sessao::setFlash('mensagem', 'Comentario cadastrado com sucesso.');
+            DW3Sessao::setFlash('mensagem', 'Comentário cadastrado com sucesso!');
             $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
 
         } else {
@@ -34,7 +34,6 @@ class ComentarioControlador extends Controlador
                 'usuario' => $usuario,
                 'receita' => $receita,
                 'comentarios' => $comentarios,
-                'mensagem' => DW3Sessao::getFlash('mensagem')
             ]);
         }
     }
@@ -58,7 +57,7 @@ class ComentarioControlador extends Controlador
             DW3Sessao::setFlash('mensagem', 'Houve um erro ao deletar seu comentário!');
             $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
         } else {
-            DW3Sessao::setFlash('mensagem', 'Comentário deletado com sucesso.');
+            DW3Sessao::setFlash('mensagem', 'Comentário deletado com sucesso!');
             $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
         }
     }

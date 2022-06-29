@@ -7,13 +7,15 @@ use \Framework\DW3Sessao;
 
 
 class UsuarioControlador extends Controlador
-{
-    
+{    
 
     public function criar()
     {
-        $this->visao('usuario/criar.php', [
-            'mensagem' => DW3Sessao::getFlash('mensagem', null)
+
+        $usuario = $this->getUsuarioSessao();
+
+        $this->visao('usuario/criar.php',[
+            'usuario' => $usuario
         ]);
     }
 
@@ -23,8 +25,8 @@ class UsuarioControlador extends Controlador
         
         if ($usuario->isValido()) {
             $usuario->salvar();
-            $this->redirecionar(URL_RAIZ . 'usuario/sucesso');
             DW3Sessao::setFlash('mensagem', 'Usuário Cadastrado com sucesso.');
+            $this->redirecionar(URL_RAIZ . 'usuario/sucesso');            
         } else {
             $this->setErros($usuario->getValidacaoErros());
             $this->visao('usuario/criar.php');
@@ -33,8 +35,11 @@ class UsuarioControlador extends Controlador
 
     public function sucesso()
     {
+        if(DW3Sessao::get('usuario')){
+            $this->redirecionar(URL_RAIZ . 'receitas');
+        }
         $this->visao('/usuario/sucesso.php',[
-            'mensagem' => DW3Sessao::getFlash('mensagem', null)
+            'mensagem' => DW3Sessao::getFlash('mensagem')
         ]);
     }
 

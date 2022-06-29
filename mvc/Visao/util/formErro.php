@@ -1,3 +1,3 @@
 <?php if ($this->temErro($campo)): ?>
-    <span class="help-block"><?= $this->getErro($campo) ?></span>
+    <span class="msg msg-error z-depth-3 scale-transition"><?= $this->getErro($campo) ?></span>
 <?php endif ?>

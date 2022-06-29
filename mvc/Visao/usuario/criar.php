@@ -19,7 +19,7 @@
                     </div>
                     <div class="input-field invalid col s12 m10 offset-m1">
                         <i class="material-icons prefix">lock</i>
-                        <input  name="senha" id="senha" value="" type="password" required="" aria-required="true">
+                        <input minlength="5" name="senha" id="senha" value="" type="password" required="" aria-required="true">
                         <label for="senha" data-error="Senha muito curta">Senha</label>
                         <span class="helper-text" data-error="errado" data-success="correto">A senha deve conter no mínimo 5 dígitos</span>
                     </div>

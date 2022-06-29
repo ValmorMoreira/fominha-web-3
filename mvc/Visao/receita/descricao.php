@@ -1,4 +1,11 @@
 <main>
+    <?php if ($mensagem) : ?>
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <?= $mensagem ?>
+        </div>
+    <?php endif ?>
+
     <div class="container">
         <form class="col s12" action="<?= URL_RAIZ . 'receita/descricao/id=' . $receita->getId() ?>" method="post">
             <div class="row" style="background-color: rgba(255, 255, 255, 0.301);">
@@ -12,22 +19,22 @@
 
                 </div>
                 <div class="container">
-                <div class="row">
-                    <div class="col s6">
-                        <img class="materialboxed align-center" width="100%" src="<?= URL_IMG . $receita->getImagem() ?> ">
-                    </div>
-                    <div class="col s6">
-                        <div class="card-panel red darken-4">
-                            <span class="white-text">
-                                <h4>Ingredientes</h4>
-                                <p><?= $receita->getIngredientes() ?></p>
-                                <div class="divider"></div>
-                                <h4>Modo de preparo</h4>
-                                <p><?= $receita->getModoDePreparo() ?></p>
-                            </span>
+                    <div class="row">
+                        <div class="col s6">
+                            <img class="materialboxed align-center" width="100%" src="<?= URL_IMG . $receita->getImagem() ?> ">
+                        </div>
+                        <div class="col s6">
+                            <div class="card-panel red darken-4">
+                                <span class="white-text">
+                                    <h4>Ingredientes</h4>
+                                    <p><?= $receita->getIngredientes() ?></p>
+                                    <div class="divider"></div>
+                                    <h4>Modo de preparo</h4>
+                                    <p><?= $receita->getModoDePreparo() ?></p>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
 
                 <div class="col s12">
@@ -57,19 +64,19 @@
                                     <span class="title"> <?= $comentario->getUsuario()->getNome() ?> </span>
                                     <h5> <?= $comentario->getComentario() ?> </h5>
                                     <p>Comentado em: <?= $comentario->getDataFormatada() ?> </p>
-                                    <?php if ($this->getUsuario() == $comentario->getUsuarioId() ) : ?>
-                                    <form action="<?= URL_RAIZ . 'receitas/comentario/deletar/' . $comentario->getId() ?> " method="POST">
-                                    <input type="hidden" name="_metodo" value="DELETE">
-                                    <button type="submit" style="background-color: transparent; border: none; color:red" onclick="confirm('Deseja deletar o comentário?')" class="secondary-content">
-                                        <i class="material-icons">delete</i>
-                                        <p>Deletar</p>
-                                    </button>
-                                </form> 
+                                    <?php if ($this->getUsuario() == $comentario->getUsuarioId()) : ?>
+                                        <form action="<?= URL_RAIZ . 'receitas/comentario/deletar/' . $comentario->getId() ?> " method="POST">
+                                            <input type="hidden" name="_metodo" value="DELETE">
+                                            <button type="submit" style="background-color: transparent; border: none; color:red" onclick="alert('comentário deletado com sucesso!')" class="secondary-content">
+                                                <i class="material-icons">delete</i>
+                                                <p>Deletar</p>
+                                            </button>
+                                        </form>
 
                                 </li>
-                                <?php endif ?>
-                            <?php endforeach ?>
-                            
+                            <?php endif ?>
+                        <?php endforeach ?>
+
                         </ul>
                     </div>
                 </div>

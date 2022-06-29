@@ -3,7 +3,7 @@
     <div >
         <div class="row">
             <div class="card-panel-new">
-                <form action="<?= URL_RAIZ . 'receitas/editar/' . $receita->getId() ?>" method="POST">
+                <form action="<?= URL_RAIZ . 'receitas/editar/' . $receita->getId() ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_metodo" value="PATCH">
                     <h3>Editar receita</h3>
                     <div class="col s6">
@@ -26,33 +26,29 @@
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">mode_edit</i>
-                        <textarea name="ingredientes"  class="materialize-textarea" placeholder="Exemplo: 03 Ovos" data-error="Favor inserir os ingredientes da receita" required>
-                            <?= $receita->getIngredientes() ?>
-                            </textarea>
+                        <textarea name="ingredientes"  class="materialize-textarea" placeholder="Exemplo: 03 Ovos" data-error="Favor inserir os ingredientes da receita" required><?= $receita->getIngredientes() ?></textarea>
                         <label for="icon_prefix2">Ingredientes</label>
                     </div>
 
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">toc</i>
-                        <textarea name="modo_de_preparo"  class="materialize-textarea" data-error="Por favor descreva o modo de preparo." required>
-                                <?= $receita->getModoDePreparo() ?>
-                            </textarea>
+                        <textarea name="modo_de_preparo"  class="materialize-textarea" data-error="Por favor descreva o modo de preparo." required><?= $receita->getModoDePreparo() ?></textarea>
                         <label for="icon_prefix2">Modo de preparo</label>
                     </div>
 
                     <div class="row">
                         <div class="file-field input-field col s6">
                             <div class="btn green darken-2">
-                                <span>Carregar imagem</span>
-                                <input type="file" name="foto">
+                                <span>Imagem selecionada</span>
+                                <input disabled type="file" name="foto">
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
+                                <input class="file-path validate" type="text" value="<?= $receita->getImagem() ?>" >
                             </div>
                         </div>
                         <div class=" col s6">
-                            <p><strong>O envio da imagem é opcional*</strong></p>
+                            <p><strong>Não é possível atualizar a imagem*</strong></p>
                         </div>
                     </div>
 

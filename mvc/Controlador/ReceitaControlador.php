@@ -34,13 +34,16 @@ class ReceitaControlador extends Controlador
   
     public function index()
     {
-        $sqlQuery = empty($_GET['busca']) ? null : $_GET['busca'];
-        $orderBy = empty($_GET['ordenar']) ? 'asc' : $_GET['ordenar'];
+        $usuario = $this->getUsuarioSessao();
 
-        $paginacao = $this->calcularPaginacao("buscarTodos", "contarTodos", $orderBy);
+        $sqlQuery = empty($_GET['busca']) ? null : $_GET['busca'];
+        $orderBy = empty($_POST['ordenar']) ? 'desc' : $_POST['ordenar'];       
+        
 
         if ($sqlQuery) {
-            $paginacao = $this->calcularPaginacao("buscarPorIngrediente", "contarTodos", $sqlQuery);
+            $paginacao = $this->calcularPaginacao("buscarPorIngrediente", "contarTodos",  $orderBy, $sqlQuery);
+        }else{
+            $paginacao = $this->calcularPaginacao("buscarTodos", "contarTodos", $orderBy);
         }
 
         $this->visao('receita/index.php', [
@@ -50,6 +53,7 @@ class ReceitaControlador extends Controlador
             'ultimaPagina' => $paginacao['ultimaPagina'],
             'busca' => $sqlQuery,
             'ordenar' => $orderBy,
+            'usuario' => $usuario
             ]);
     }
 
@@ -58,7 +62,6 @@ class ReceitaControlador extends Controlador
         $this->verificarLogado();
         $this->visao('receita/cadastrar.php', [
             'receitas' => Receita::buscarTodos(),
-            'mensagem' =>  DW3Sessao::getFlash('mensagemFlash')
         ]);  
     }
 
@@ -74,12 +77,15 @@ class ReceitaControlador extends Controlador
             $_POST['modo_de_preparo'],
             $_POST['data_receita'],
             DW3Sessao::get('usuario'),
+            null,
+            null,
+            null,
             $foto
         );
 
         if ($receita->isValido()) {
             $receita->salvar();
-            DW3Sessao::setFlash('mensagem', 'Receita cadastrada com sucesso');
+            DW3Sessao::setFlash('mensagem', 'Receita cadastrada com sucesso.');
             $this->redirecionar(URL_RAIZ . 'usuario/receitas');
         } else {
             $this->setErros($receita->getValidacaoErros());
@@ -109,7 +115,7 @@ class ReceitaControlador extends Controlador
         $receita->setModoDePreparo($_POST['modo_de_preparo']);
         $receita->setDataReceita($_POST['data_receita']);
         $receita->salvar();
-        DW3Sessao::setFlash('mensagemFlash', 'Receita Atualizada com sucesso.');
+        DW3Sessao::setFlash('mensagem', 'Receita editada com sucesso.');
         $this->redirecionar(URL_RAIZ . 'usuario/receitas');
     }
 
@@ -119,7 +125,8 @@ class ReceitaControlador extends Controlador
          if($receitaValida->getId() != null){
             $this->visao('receita/descricao.php', [
                 'receita'=> Receita::buscarId($id),
-                'comentarios' => Comentario::buscarTodasPorId($id),   
+                'comentarios' => Comentario::buscarTodasPorId($id),
+                'mensagem' => DW3Sessao::getFlash('mensagem')  
             ]); 
         }else{
             $this->redirecionar(URL_RAIZ . 'receitas');
@@ -133,7 +140,7 @@ class ReceitaControlador extends Controlador
         $usuario = $this->getUsuario();
         $this->visao('usuario/receitas.php', [
             'receitas' => Receita::buscarReceitasUsuario($usuario),
-             DW3Sessao::getFlash('mensagem', null),
+            'mensagem' => DW3Sessao::getFlash('mensagem'),
         ]);  
     } 
 
@@ -144,7 +151,7 @@ class ReceitaControlador extends Controlador
 
         if ($receita->getUsuarioId() == $this->getUsuario()) {
             Receita::destruir($id);
-            DW3Sessao::setFlash('mensagem', 'Receita destruida.');
+            DW3Sessao::setFlash('mensagem', 'Receita deletada com sucesso.');
             $this->redirecionar(URL_RAIZ . 'usuario/receitas');
         } else {
             $this->redirecionar(URL_RAIZ . 'home');

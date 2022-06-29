@@ -35,10 +35,3 @@ CREATE TABLE comentarios (
     FOREIGN KEY (receita_id) REFERENCES receitas (id) ON DELETE CASCADE
 )
 ENGINE = InnoDB;
-
-insert into usuarios (nome, email, senha) VALUES ('Valmor', 'valmor@teste.com','$2y$10$6TKtd8NwIExAIAS0vWIsUeKOP5Sr1zj0Fvt9DXYqgG2Wl8lXH8GOy');
-insert into usuarios (nome, email, senha) VALUES ('Admin', 'admin@teste.com','$2y$10$6TKtd8NwIExAIAS0vWIsUeKOP5Sr1zj0Fvt9DXYqgG2Wl8lXH8GOy');
-
-insert into receitas (nome,categoria,ingredientes,modo_de_preparo,data_receita,usuario_id) values ('carne de panela','carnes', 'Carne bovina em cubos', 'Cortar tudo e meter fogo na chapa', '2022-05-01', 1);
-insert into receitas (nome,categoria,ingredientes,modo_de_preparo,data_receita,usuario_id) values ('buchada de bode','carnes', 'Carne de primeira essa', 'Cortar tudo e meter fogo na chapa', '2022-05-21', 1);
-insert into receitas (nome,categoria,ingredientes,modo_de_preparo,data_receita,usuario_id) values ('sorvete','sobremesas', 'chocolate, leite em pó', 'bater tudo no liquidificador e beber gelado', '2022-04-20', 2);

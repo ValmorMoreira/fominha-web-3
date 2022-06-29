@@ -11,14 +11,16 @@ class Receita extends Modelo
     const BUSCAR_ID = 'SELECT * FROM receitas WHERE id = ?';
     const INSERIR = 'INSERT INTO receitas(nome, categoria, ingredientes, modo_de_preparo, data_receita, usuario_id) VALUES ( ?, ?, ?, ?, ?, ?)';
     const DELETAR = 'DELETE FROM receitas WHERE id = ?';
-    const BUSCAR_TODOS = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id)  ORDER BY r.nome ASC LIMIT ? OFFSET ?';
+    const BUSCAR_TODOS = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id)  ORDER BY r.data_receita DESC LIMIT ? OFFSET ?';
+    const BUSCAR_TODOS_ASC = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id)  ORDER BY r.data_receita ASC LIMIT ? OFFSET ?';
     const ATUALIZAR = 'UPDATE receitas SET nome = ?, categoria = ?, ingredientes = ?, modo_de_preparo = ?, data_receita = ? WHERE id = ?';
     const CONTAR_TODAS = 'SELECT count(id) FROM receitas';
     const BUSCAR = 'SELECT * FROM receitas ORDER BY nome';
     const BUSCA = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.id u_id, u.email FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id) WHERE TRUE';
     const BUSCAR_RECEITAS_USUARIO = 'SELECT r.nome, r.categoria, r.ingredientes r_ingredientes, r.modo_de_preparo, r.data_receita r_data, u.nome u_nome, r.id r_id, u.id u_id  FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id) WHERE u.id = ? ORDER BY r.data_receita DESC';
-    const BUSCAR_INGREDIENTE = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id) WHERE r.ingredientes LIKE ? LIMIT ? OFFSET ?';
+    const BUSCAR_INGREDIENTE = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id) WHERE r.ingredientes LIKE ? ORDER BY r.data_receita DESC LIMIT ? OFFSET ?';
     const BUSCAR_INGREDIENTE_TRUE = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id) WHERE TRUE';
+    
     private $id;
     private $nome;
     private $categoria;
@@ -27,6 +29,7 @@ class Receita extends Modelo
     private $dataReceita;
     private $usuarioId;
     private $usuario;
+    private $receita;
     private $foto;
 
 
@@ -36,11 +39,12 @@ class Receita extends Modelo
         $ingredientes,
         $mododepreparo,
         $dataReceita,
-        $usuarioId,
+        $usuarioId,  
         $usuario = null,
         $receita = null,
         $id = null,
         $foto = null
+        
 
     ) {
         $this->id = $id;
@@ -141,13 +145,14 @@ class Receita extends Modelo
     }
 
     public function salvar()
-    { {
-            if ($this->id == null) {
-                $this->inserir();
-                $this->salvarImagem();
-            } else {
-                $this->atualizar();
-            }
+    {
+        
+        if ($this->id == null) {
+            $this->inserir();
+            $this->salvarImagem();
+        } else {
+            $this->atualizar();
+            $this->salvarImagem();          
         }
     }
 
@@ -212,9 +217,14 @@ class Receita extends Modelo
         );
     }
 
-    public static function buscarTodos($limit = 4, $offset = 0)
+    public static function buscarTodos($limit = 4, $offset = 0, $orderBy = 'desc')
     {
-        $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+        if ($orderBy == 'asc') {
+            $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_ASC);
+        } else {
+            $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+        }
+
         $comando->bindValue(1, $limit, PDO::PARAM_INT);
         $comando->bindValue(2, $offset, PDO::PARAM_INT);
         $comando->execute();
