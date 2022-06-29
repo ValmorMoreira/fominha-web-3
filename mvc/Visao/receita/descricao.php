@@ -45,16 +45,19 @@
 
                         <form name="comentarios" class="col s12" action="<?= URL_RAIZ . 'receitas/comentar' ?>" method="POST">
                             <div class="row">
-                                <div class="col s10">
-                                    <input placeholder="Ex: Gostei muito dessa receita..." name="comentario" id="comentario" type="text" class="validate autocomplete white invalid" style="padding-left:15px;border: 1px solid rgba(71, 3, 9, 0.5); border-radius: 10px; background: transparent;">
+                                <div class="col s10 <?= $this->getErroCss('comentario') ?>">
+                                    <input value="<?= $this->getPost('comentario') ?>" placeholder="Ex: Gostei muito dessa receita..." name="comentario" id="comentario" type="text" class="validate autocomplete white invalid" style="padding-left:15px;border: 1px solid rgba(71, 3, 9, 0.5); border-radius: 10px; background: transparent;">
                                 </div>
+                                
                                 <input type="hidden" class="form-control" id="nome" name="data_comentario" value="<?= date_create()->format('Y-m-d H:i:s') ?>">
                                 <div class="col s2">
                                     <button type="submit" class="btn green darken-4 waves-effect waves-light" width="100%" type="submit">
                                         Comentar
-                                    </button>
+                                    </button>                                    
                                 </div>
+                                
                             </div>
+                            <?php $this->incluirVisao('util/formErro.php', ['campo' => 'comentario']) ?>
                         </form>
 
                         <ul class="collection">

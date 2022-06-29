@@ -89,7 +89,7 @@ class ReceitaControlador extends Controlador
             $this->redirecionar(URL_RAIZ . 'usuario/receitas');
         } else {
             $this->setErros($receita->getValidacaoErros());
-            $this->visao('receita/criar.php');
+            $this->visao('receita/cadastrar.php');
         }
     }
 
@@ -107,16 +107,27 @@ class ReceitaControlador extends Controlador
 
     public function atualizar($id)
     {
-        $this->verificarLogado();
+        $this->verificarLogado();        
         $receita = Receita::buscarId($id);
+        $usuario = $this->getUsuarioSessao();
+
         $receita->setNomeReceita($_POST['nome']);
         $receita->setCategoria($_POST['categoria']);
         $receita->setIngredientes($_POST['ingredientes']);
         $receita->setModoDePreparo($_POST['modo_de_preparo']);
         $receita->setDataReceita($_POST['data_receita']);
-        $receita->salvar();
-        DW3Sessao::setFlash('mensagem', 'Receita editada com sucesso.');
-        $this->redirecionar(URL_RAIZ . 'usuario/receitas');
+
+        if ($receita->isValido()) {
+            $receita->salvar();
+            DW3Sessao::setFlash('mensagem', 'Receita editada com sucesso.');
+            $this->redirecionar(URL_RAIZ . 'usuario/receitas');
+        }else {
+            $this->setErros($receita->getValidacaoErros());
+            $this->visao('receita/editar.php', [
+                'usuario' => $usuario,
+                'receita' => $receita
+            ]);
+        }        
     }
 
     public function descricao($id)

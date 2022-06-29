@@ -6,42 +6,44 @@
                     <form action="<?= URL_RAIZ . 'receitas/cadastrar' ?>" method="POST" 
                     enctype="multipart/form-data">
                         <h3>Cadastro de receita</h3>
-                        <div class="col s6">
-                            <div class="input-field">
+                        <div class="col s6 <?= $this->getErroCss('nome') ?>">
+                            <div class="input-field ">
                                 <i class="material-icons prefix">book</i>
-                                <input required="" aria-required="true" name="nome" id="nome" type="text" class="validate " required="required" minlength="5">
+                                <input value="<?= $this->getPost('nome') ?>" name="nome" id="nome" type="text" >
+                                <?php $this->incluirVisao('util/formErro.php', ['campo' => 'nome']) ?>
                                 <label for="nome" data-error="Por favor adicione o nome da receita">Nome da
                                     receita</label>
                             </div>
                         </div>
                         <div class="col s6">
-                            <div class="input-field">
+                            <div class="input-field <?= $this->getErroCss('categoria') ?>">
                                 <i class="material-icons prefix">article</i>
-                                <select class="input invalid" required="true" aria-required="true" name="categoria" id="categoria" data-error="Por favor selecione uma categoria">
+                                <select  name="categoria" id="categoria" >
+                                    <option value="<?= $this->getPost('categoria') ?>"><?= $this->getPost('categoria') ?></option>
                                     <option value="bolos">Bolos</option>
                                     <option value="carnes">Carnes</option> 
                                     <option value="massas">Massas</option>                                    
                                     <option value="sobremesas">Sobremesas</option>                                    
                                     <option value="sopas">Sopas</option>
                                     <option value="variedades">Variedades</option>
-                                    <option value="vegetariano">Vegetariano</option>
-                                    
+                                    <option value="vegetariano">Vegetariano</option>                                    
                                 </select>
-                                <span class="helper-text" >Por favor selecione uma categoria</span>
                             </div>
+                            <?php $this->incluirVisao('util/formErro.php', ['campo' => 'categoria']) ?>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s12 <?= $this->getErroCss('ingredientes') ?>">
                             <i class="material-icons prefix">mode_edit</i>
-                            <textarea minlength="10" aria-required="true" name="ingredientes" id="ingredientes" class="materialize-textarea"
-                                data-error="Favor inserir os ingredientes da receita" required></textarea>
+                            <textarea name="ingredientes" id="ingredientes" class="materialize-textarea"><?= $this->getPost('ingredientes') ?></textarea>
+                                <?php $this->incluirVisao('util/formErro.php', ['campo' => 'ingredientes']) ?>
                             <label for="ingredientes">Ingredientes</label>
                         </div>
 
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s12 <?= $this->getErroCss('modo_de_preparo') ?>">
                             <i class="material-icons prefix">toc</i>
-                            <textarea minlength="10" aria-required="true" name="modo_de_preparo" id="modo_de_preparo" class="materialize-textarea" data-error="Por favor descreva o modo de preparo." required></textarea>
+                            <textarea name="modo_de_preparo" id="modo_de_preparo" class="materialize-textarea"><?= $this->getPost('modo_de_preparo') ?></textarea>
+                            <?php $this->incluirVisao('util/formErro.php', ['campo' => 'modo_de_preparo']) ?>
                             <label for="modo_de_preparo">Modo de preparo</label>
                         </div>
 

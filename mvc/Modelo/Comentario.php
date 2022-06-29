@@ -141,8 +141,8 @@ class Comentario extends Modelo
 
     protected function verificarErros()
     {
-        if (strlen($this->comentario) < 3) {
-            $this->setErroMensagem('comentario', 'Campo comentário precisa ter no mínimo 5 caracteres.');
+        if (strlen($this->comentario) < 10) {
+            $this->setErroMensagem('comentario', 'Campo comentário precisa ter no mínimo 10 caracteres.');
         }
     }
 }

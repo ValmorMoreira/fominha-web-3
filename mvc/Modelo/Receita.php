@@ -369,23 +369,23 @@ class Receita extends Modelo
 
     protected function verificarErros()
     {
-        if (strlen($this->nome) < 3) {
-            $this->setErroMensagem('nome', 'Mínimo 3 caracteres.');
+        if (strlen($this->nome) < 5) {
+            $this->setErroMensagem('nome', 'Mínimo 5 caracteres.');
         }
         if (strlen($this->nome) == null) {
             $this->setErroMensagem('nome', 'Campo não pode ser vazio');
         }
-        if (strlen($this->categoria) == null) {
-            $this->setErroMensagem('categoria', 'Campo precisa ser selecionado.');
+        if (strlen($this->categoria) == '') {
+            $this->setErroMensagem('categoria', 'Obrigatório selecionar a categoria');
         }
-        if (strlen($this->ingredientes) < 3) {
-            $this->setErroMensagem('ingredientes', 'Mínimo 3 caracteres.');
+        if (strlen($this->ingredientes) < 10) {
+            $this->setErroMensagem('ingredientes', 'Mínimo 10 caracteres.');
         }
         if (strlen($this->ingredientes) == null) {
             $this->setErroMensagem('ingredientes', 'Campo não pode ser vazio');
         }
-        if (strlen($this->mododepreparo) < 3) {
-            $this->setErroMensagem('modo_de_preparo', 'Mínimo 3 caracteres.');
+        if (strlen($this->mododepreparo) < 10) {
+            $this->setErroMensagem('modo_de_preparo', 'Mínimo 10 caracteres.');
         }
         if (strlen($this->mododepreparo) == null) {
             $this->setErroMensagem('modo_de_preparo', 'Campo não pode ser vazio');

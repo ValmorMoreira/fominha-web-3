@@ -44,7 +44,7 @@
 
                                 <form action="<?= URL_RAIZ . 'receitas/deletar/' . $receita->getId() ?>" method="post">
                                     <input type="hidden" name="_metodo" value="DELETE">
-                                    <button type="submit" style="background-color: transparent; border: none; color:red" onclick="alert('Receita deletada com sucesso!')" class="secondary-content">
+                                    <button type="submit" style="background-color: transparent; border: none; color:red" class="secondary-content">
                                         <i class="material-icons">delete</i>
                                         <p>Deletar</p>
                                     </button>

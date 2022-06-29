@@ -19,22 +19,23 @@ class ComentarioControlador extends Controlador
 
         if ($comentario->isValido()) {
             $comentario->salvar();
-
             DW3Sessao::setFlash('mensagem', 'Comentário cadastrado com sucesso!');
             $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
-
         } else {
-            $this->setErros($comentario->getValidacaoErros());
-
-            $usuario = $this->getUsuarioSessao();
+            DW3Sessao::setFlash('mensagem', 'O comentário não foi cadastrado!');
+            $this->setErros($comentario->getValidacaoErros());            
+           // $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
+            $usuario =  DW3Sessao::get('usuario');
             $receita = Receita::buscarId($receitaId);
             $comentarios = Comentario::buscarTodasPorId($receita->getId());
 
-            $this->visao('receitas/index.php',[
+            $this->visao('receita/descricao.php',[
                 'usuario' => $usuario,
                 'receita' => $receita,
                 'comentarios' => $comentarios,
+                'mensagem' => DW3Sessao::getFlash('mensagem')
             ]);
+            
         }
     }
 

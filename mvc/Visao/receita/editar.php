@@ -7,33 +7,44 @@
                     <input type="hidden" name="_metodo" value="PATCH">
                     <h3>Editar receita</h3>
                     <div class="col s6">
-                        <div class="input-field">
+                        <div class="input-field <?= $this->getErroCss('nome') ?>">
                             <i class="material-icons prefix">book</i>
-                            <input autofocus name="nome" id="nome" type="text" class="validate" required="required" value="<?= $receita->getNomeReceita() ?> ">
-                            <label for="nome" data-error="Por favor adicione o nome da receita">Nome da
-                                receita </label>
+                            <input autofocus name="nome" id="nome" type="text"  value="<?= $receita->getNomeReceita() ?> ">
+                            <?php $this->incluirVisao('util/formErro.php', ['campo' => 'nome']) ?>
+                            <label for="nome">Nome da receita </label>
                         </div>
                     </div>
                     <div class="col s6">
-                        <div class="input-field">
+                        <div class="input-field <?= $this->getErroCss('categoria') ?>">
                             <i class="material-icons prefix">article</i>
-                            <select class="input invalid" required="true" aria-required="true" name="categoria" id="categoria" data-error="Por favor selecione uma categoria">
+                            <select class="input" name="categoria" id="categoria">
                                 <option selected value="<?= $receita->getCategoria() ?>"><?= $receita->getCategoria() ?></option>
+                                    <option value="<?= $this->getPost('categoria') ?>"><?= $this->getPost('categoria') ?></option>
+                                    <option value="bolos">Bolos</option>
+                                    <option value="carnes">Carnes</option> 
+                                    <option value="massas">Massas</option>                                    
+                                    <option value="sobremesas">Sobremesas</option>                                    
+                                    <option value="sopas">Sopas</option>
+                                    <option value="variedades">Variedades</option>
+                                    <option value="vegetariano">Vegetariano</option>  
                             </select>
-                            <span class="helper-text">Não é possível alterar a categoria</span>
+                            
                         </div>
+                        <?php $this->incluirVisao('util/formErro.php', ['campo' => 'categoria']) ?>
                     </div>
 
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 <?= $this->getErroCss('ingredientes') ?>">
                         <i class="material-icons prefix">mode_edit</i>
-                        <textarea name="ingredientes"  class="materialize-textarea" placeholder="Exemplo: 03 Ovos" data-error="Favor inserir os ingredientes da receita" required><?= $receita->getIngredientes() ?></textarea>
+                        <textarea name="ingredientes"  class="materialize-textarea"><?= $receita->getIngredientes() ?></textarea>
+                        <?php $this->incluirVisao('util/formErro.php', ['campo' => 'ingredientes']) ?>
                         <label for="icon_prefix2">Ingredientes</label>
                     </div>
 
 
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 <?= $this->getErroCss('modo_de_preparo') ?>">
                         <i class="material-icons prefix">toc</i>
-                        <textarea name="modo_de_preparo"  class="materialize-textarea" data-error="Por favor descreva o modo de preparo." required><?= $receita->getModoDePreparo() ?></textarea>
+                        <textarea name="modo_de_preparo"  class="materialize-textarea"><?= $receita->getModoDePreparo() ?></textarea>
+                        <?php $this->incluirVisao('util/formErro.php', ['campo' => 'modo_de_preparo']) ?>
                         <label for="icon_prefix2">Modo de preparo</label>
                     </div>
 
@@ -45,6 +56,7 @@
                             </div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text" value="<?= $receita->getImagem() ?>" >
+                                <input type="hidden"  name="data_receita" value="<?= date_create()->format('Y-m-d H:i:s') ?>">
                             </div>
                         </div>
                         <div class=" col s6">
@@ -53,11 +65,8 @@
                     </div>
 
                     <div class="row">
-                        <div class="col s6">
+                        <div class="col s12">
                             <button class="btn-large blue darken-4 waves-effect waves-light modal-close" style="width:100%" type="submit" name="register_recipes">Editar</button>
-                        </div>
-                        <div class="col s6">
-                            <a href="<?= URL_RAIZ . 'usuario/receitas' ?>"><button onclick="alert('Voltando para suas receitas...')" class="btn-large red darken-4 waves-effect waves-light modal-action modal-close" style="width:100%" type="" name="register_recipes">Cancelar</button></a>
                         </div>
                     </div>
             </div>
