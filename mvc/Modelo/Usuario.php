@@ -64,28 +64,6 @@ class Usuario extends Modelo
         return password_verify($senhaPlana, $this->senha);
     }
 
-    protected function verificarErros()
-    {
-        if (strlen($this->nome) < 3) {
-            $this->setErroMensagem('nome', 'Deve ter no mínimo 3 caracteres.');
-        }
-        if (strlen($this->nome) == null) {
-            $this->setErroMensagem('email', 'Campo não pode ser vazio');
-        }
-        if (strlen($this->email) < 3) {
-            $this->setErroMensagem('email', 'Deve ter no mínimo 3 caracteres.');
-        }
-        if (strlen($this->email) == null) {
-            $this->setErroMensagem('email', 'Campo não pode ser vazio');
-        }
-        if (strlen($this->senhaPlana) < 3) {
-            $this->setErroMensagem('senha', 'Deve ter no mínimo 3 caracteres.');
-        }
-        if (strlen($this->senhaPlana) == null) {
-            $this->setErroMensagem('senha', 'Campo não pode ser vazio');
-        }
-    }
-
     public function salvar()
     {
         $this->inserir();
@@ -154,5 +132,25 @@ class Usuario extends Modelo
             );
         }
         return $objetos;
+    }
+
+    protected function verificarErros()
+    {
+        
+        if (strlen($this->nome) == null) {
+            $this->setErroMensagem('email', 'Campo e-mail não pode ser vazio');
+        }
+        if (strlen($this->nome) < 5) {
+            $this->setErroMensagem('nome', 'O nome deve ter no mínimo 5 caracteres.');
+        }
+        if (strlen($this->email) == null) {
+            $this->setErroMensagem('email', 'Campo e-mail não pode ser vazio');
+        }
+        if (strlen($this->senhaPlana) < 5) {
+            $this->setErroMensagem('senha', 'A senha deve ter no mínimo 5 caracteres.');
+        }
+        if (strlen($this->senhaPlana) == null) {
+            $this->setErroMensagem('senha', 'Campo senha não pode ser vazio');
+        }
     }
 }

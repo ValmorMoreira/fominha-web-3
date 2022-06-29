@@ -21,8 +21,8 @@ class LoginControlador extends Controlador
             DW3Sessao::set('nome-usuario', $usuario->getNome());
             $this->redirecionar(URL_RAIZ . 'receitas');
         } else {
-            $this->setErros(['login' => 'Usuário ou senha inválido.']);
-            $this->visao('usuario/criar.php');
+            $this->setErros(['email' => 'Usuário ou senha inválidos.']);
+            $this->visao('login/index.php');
         }
 
     }

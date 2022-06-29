@@ -192,6 +192,27 @@ h4 {
     text-align: center;
     font-size: larger;
   }
+
+.alert.success {
+    background-color: #04AA6D;
+    padding: 10px;
+}
+
+.alert.info {
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.alert.warning {
+    background-color: #ff9800;
+    padding: 10px;
+}
+
+.alert.danger {
+    background-color: #ff0000ad;
+    padding: 10px;
+}
+  
   
   .closebtn {
     margin-left: 15px;

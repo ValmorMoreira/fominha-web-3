@@ -1,3 +1,6 @@
 <?php if ($this->temErro($campo)): ?>
-    <span class="msg msg-error z-depth-3 scale-transition"><?= $this->getErro($campo) ?></span>
+    <div class="alert danger">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <?= $this->getErro($campo) ?>
+    </div>
 <?php endif ?>
