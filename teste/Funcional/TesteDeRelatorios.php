@@ -7,11 +7,11 @@ class TesteDeRelatorios extends Teste
 {
     public function testeRelatorios()
     {
-        $resposta = $this->get(URL_RAIZ . 'relatorios');
+        $resposta = $this->get(URL_RAIZ . 'relatorio');
         $this->verificarContem($resposta, 'Total de usuários');
-        $resposta = $this->get(URL_RAIZ . 'relatorios');
+        $resposta = $this->get(URL_RAIZ . 'relatorio');
         $this->verificarContem($resposta, 'Total de receitas');
-        $resposta = $this->get(URL_RAIZ . 'relatorios');
-        $this->verificarContem($resposta, 'Total de comentários');
+        $resposta = $this->get(URL_RAIZ . 'relatorio');
+        $this->verificarContem($resposta, 'Total de Comentários');
     }
 }

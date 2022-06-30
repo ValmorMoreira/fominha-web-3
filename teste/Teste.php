@@ -7,12 +7,13 @@ use \Framework\DW3Sessao;
 
 class Teste extends DW3Teste
 {
-    protected $usuario;
 
 	public function logar()
 	{
-		$this->usuario = new Usuario('Valmor', 'valmor@teste.com', '12345');
-		$this->usuario->salvar();
-		DW3Sessao::set('usuario', $this->usuario->getId());
+		$usuario = new Usuario('Valmor', 'valmor@teste.com', '12345');		
+		$usuario->salvar();		
+		DW3Sessao::set('usuario', $usuario->getId());
+
+		return $usuario;
 	}
 }

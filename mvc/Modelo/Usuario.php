@@ -21,16 +21,16 @@ class Usuario extends Modelo
     private $senhaPlana;
 
     public function __construct(
-        $nome,
-        $email,
-        $senha,
+        $nome = null,
+        $email = null,
+        $senhaPlana = null,
         $id = null
     ) {
-        $this->id = $id;
         $this->nome = $nome;
         $this->email = $email;
-        $this->senhaPlana = $senha;
-        $this->senha = password_hash($senha, PASSWORD_BCRYPT);
+        $this->senhaPlana = $senhaPlana;
+        $this->senha = password_hash($senhaPlana, PASSWORD_BCRYPT);
+        $this->id = $id;
     }
 
     public function getId()
@@ -43,14 +43,14 @@ class Usuario extends Modelo
         return $this->nome;
     }
 
-    public function setNome($nome)
-    {
-        $this->nome = $nome;
-    }
-
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
     }
 
     public function setEmail($email)
@@ -67,6 +67,8 @@ class Usuario extends Modelo
     public function salvar()
     {
         $this->inserir();
+
+        return $this;
     }
 
     private function inserir()
@@ -90,6 +92,7 @@ class Usuario extends Modelo
         return new Usuario(
             $registro['nome'],
             $registro['email'],
+            '',
             $registro['id'],
         );
     }
@@ -126,9 +129,11 @@ class Usuario extends Modelo
         $objetos = [];
         foreach ($registros as $registro) {
             $objetos[] = new Usuario(
-                $registro['id'],
+                
                 $registro['nome'], 
-                $registro['email']
+                $registro['email'],
+                '',
+                $registro['id']
             );
         }
         return $objetos;

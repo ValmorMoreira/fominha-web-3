@@ -45,11 +45,11 @@ $rotas = [
     //Direcionamento do usuário da tela de receitas para descrição da receita clicada
     //Também a rota para adicionar comentários.
     '/receita/descricao/id=?' => [
-        'GET' => '\Controlador\ReceitaControlador#descricao',
-        'POST' => '\Controlador\ComentarioControlador#armazenar',        
+        'GET' => '\Controlador\ReceitaControlador#descricao',  
+        'POST' => '\Controlador\ComentarioControlador#armazenar',              
     ],
 
-    //Rota para dacastro das receitas
+    //Rota para cadastro das receitas
     '/receitas/cadastrar' => [
         'GET' => '\Controlador\ReceitaControlador#criar',
         'POST' => '\Controlador\ReceitaControlador#armazenar',
@@ -67,10 +67,6 @@ $rotas = [
 
      '/receitas/deletar/?' => [
         'DELETE' => '\Controlador\ReceitaControlador#destruir',
-    ],
-
-    '/receita/comentar' => [
-        'POST' => '\Controlador\ComentarioControlador#armazenar',     
     ],
 
     '/receitas/comentario/deletar/?' => [

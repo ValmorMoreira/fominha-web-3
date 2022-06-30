@@ -1,4 +1,4 @@
-<meta http-equiv="refresh" content="7;URL='<?= URL_RAIZ . 'login' ?>'" />
+<meta http-equiv="refresh" content="5;URL='<?= URL_RAIZ . 'login' ?>'" />
 <main>
 
     <?php if ($mensagem) : ?>

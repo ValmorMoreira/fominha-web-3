@@ -151,9 +151,10 @@ class Receita extends Modelo
             $this->inserir();
             $this->salvarImagem();
         } else {
-            $this->atualizar();
-            $this->salvarImagem();          
+            $this->atualizar();      
         }
+
+        return $this;
     }
 
     private function salvarImagem()

@@ -43,10 +43,10 @@
                             <h4 style="text-align:center">Comentários</h4>
                         </span>
 
-                        <form name="comentarios" class="col s12" action="<?= URL_RAIZ . 'receitas/comentar' ?>" method="POST">
+                        <form name="comentarios" class="col s12" action="" method="POST">
                             <div class="row">
                                 <div class="col s10 <?= $this->getErroCss('comentario') ?>">
-                                    <input value="<?= $this->getPost('comentario') ?>" placeholder="Ex: Gostei muito dessa receita..." name="comentario" id="comentario" type="text" class="validate autocomplete white invalid" style="padding-left:15px;border: 1px solid rgba(71, 3, 9, 0.5); border-radius: 10px; background: transparent;">
+                                    <input value="<?= $this->getPost('comentario') ?>" name="comentario" id="comentario" type="text" class="validate autocomplete white invalid" style="padding-left:15px;border: 1px solid rgba(71, 3, 9, 0.5); border-radius: 10px; background: transparent;">
                                 </div>
                                 
                                 <input type="hidden" class="form-control" id="nome" name="data_comentario" value="<?= date_create()->format('Y-m-d H:i:s') ?>">
@@ -70,12 +70,11 @@
                                     <?php if ($this->getUsuario() == $comentario->getUsuarioId()) : ?>
                                         <form action="<?= URL_RAIZ . 'receitas/comentario/deletar/' . $comentario->getId() ?> " method="POST">
                                             <input type="hidden" name="_metodo" value="DELETE">
-                                            <button type="submit" style="background-color: transparent; border: none; color:red" onclick="alert('comentário deletado com sucesso!')" class="secondary-content">
+                                            <button type="submit" style="background-color: transparent; border: none; color:red" class="secondary-content">
                                                 <i class="material-icons">delete</i>
                                                 <p>Deletar</p>
                                             </button>
                                         </form>
-
                                 </li>
                             <?php endif ?>
                         <?php endforeach ?>

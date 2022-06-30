@@ -30,6 +30,7 @@ class LoginControlador extends Controlador
     public function destruir()
     {
         DW3Sessao::deletar('usuario');
+        DW3Sessao::deletar('nome-usuario');
         $this->redirecionar(URL_RAIZ . 'home');
     }
 }

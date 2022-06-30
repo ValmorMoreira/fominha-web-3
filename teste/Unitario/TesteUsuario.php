@@ -10,18 +10,38 @@ class TesteUsuario extends Teste
 {
     public function testeInserir()
     {
-        $usuario = new Usuario('Bastião','teste@example.com', 'senha');
-        $usuario->salvar();
-        $query = DW3BancoDeDados::query("SELECT * FROM usuarios WHERE email = 'teste@example.com'");
-        $bdUsuairo = $query->fetch();
-        $this->verificar($bdUsuairo !== false);
+        $usuario = (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+
+        $query = DW3BancoDeDados::query('SELECT * FROM usuarios WHERE id = ' . $usuario->getId());
+
+        $usuariosDoBanco = $query->fetchAll();
+
+        $this->verificar(count($usuariosDoBanco) == 1);
     }
 
     public function testeBuscarEmail()
     {
-        $usuario = new Usuario('Bastião','teste@example.com', 'senha');
-        $usuario->salvar();
-        $usuario = Usuario::buscarEmail('teste@example.com');
-        $this->verificar($usuario !== false);
+       (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+
+        $usuarioLogin = Usuario::buscarEmail('valmor@teste.com');
+        $this->verificar($usuarioLogin != null);
+    }
+
+    public function testeBuscarPorId()
+    {
+        $usuario = (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+        $usuarioBusca = Usuario::buscarId($usuario->getId());
+
+        $this->verificar($usuario->getId() == $usuarioBusca->getId());
+    }
+
+    public function testeContarTodos()
+    {
+        (new Usuario('Admin', 'admin@google.com', 'master2022'))->salvar();
+        (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+        (new Usuario('Batman', 'batman@gotham.com', 'morcego'))->salvar();
+
+        $totalDeUsuarios = Usuario::contarTodos();
+        $this->verificar($totalDeUsuarios == 3);
     }
 }

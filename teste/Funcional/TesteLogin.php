@@ -31,7 +31,7 @@ class TesteLogin extends Teste
             'email' => 'jo',
             'senha' => '12'
         ]);
-        $this->verificarContem($resposta, 'Cadastro');
+        $this->verificarContem($resposta, 'Login');
         $this->verificar(DW3Sessao::get('usuario') == null);
     }
 
