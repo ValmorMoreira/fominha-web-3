@@ -13,6 +13,7 @@ class Teste extends DW3Teste
 		$usuario = new Usuario('Valmor', 'valmor@teste.com', '12345');		
 		$usuario->salvar();		
 		DW3Sessao::set('usuario', $usuario->getId());
+		DW3Sessao::set('nome-usuario', $usuario->getNome());
 
 		return $usuario;
 	}

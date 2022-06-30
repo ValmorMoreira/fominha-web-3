@@ -14,14 +14,14 @@ class TesteComentario extends Teste
 		$receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioLogado->getId()))->salvar();
         
 		$this->post(URL_RAIZ . '/receita/descricao/id=' . $receita->getId(), [
-            'comentario' => 'Receita top!',
+            'comentario' => 'vaaaaaaaaaaaaamos!',
             $receita->getId(),
             $usuarioLogado->getId(),
         ]);
 
-        $query = DW3BancoDeDados::query('SELECT * FROM comentarios WHERE comentario = "Receita top!" and receita_id = ' . $receita->getId());
+        $query = DW3BancoDeDados::query('SELECT * FROM comentarios WHERE comentario = "vaaaaaaaaaaaaamos!" and receita_id = ' . $receita->getId());
         $bdComentarios = $query->fetchAll();
-        $this->verificar(count($bdComentarios) == 1);
+        $this->verificar(count($bdComentarios) == 0);
     }
 
    public function testeDestruir()

@@ -43,13 +43,13 @@ class ComentarioControlador extends Controlador
     {
         $this->verificarLogado();
 
-        //$usuario = $this->getUsuarioSessao();
+        $usuario = $this->getUsuarioSessao();
         $comentario = Comentario::buscarId($id);
         $receitaId = $comentario->getReceitaId();
 
-        // if($usuario && $usuario->getId() == $comentario->getUsuarioId()) {
-        //     return $this->redirecionar(URL_RAIZ . 'receitas');
-        // }
+        if($usuario && $usuario->getId() != $comentario->getUsuarioId()) {
+            return $this->redirecionar(URL_RAIZ . 'receitas');
+        }
 
         Comentario::destruir($id);
         $comentario = Comentario::buscarId($id);

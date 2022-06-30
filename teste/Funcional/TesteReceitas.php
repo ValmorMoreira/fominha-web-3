@@ -5,6 +5,7 @@ use \Teste\Teste;
 use \Modelo\Receita;
 use \Modelo\Usuario;
 use \Framework\DW3BancoDeDados;
+use \Framework\DW3Sessao;
 
 class TesteReceitas extends Teste
 {
@@ -17,7 +18,7 @@ class TesteReceitas extends Teste
     // public function testeCriarDeslogado()
     // {
     //     $resposta = $this->get(URL_RAIZ . 'receitas/cadastrar');
-    //     $this->verificarContem($resposta, 'Login');
+    //     $this->verificarContem($resposta, 'Não tem cadastro? Crie agora.');
     // }
 
     // public function testeListagemLogado()
@@ -30,22 +31,22 @@ class TesteReceitas extends Teste
 
  
 
-    // public function testeCriarLogado()
-    // {
-    //     $this->logar();
-    //     $resposta = $this->get(URL_RAIZ . 'receitas/cadastrar');
+    public function testeCriarLogado()
+    {
+        $this->logar();
+        $resposta = $this->get(URL_RAIZ . 'receitas/cadastrar');
 
-    //     $this->verificarContem($resposta, 'Cadastro de receita');
-    // }
+        $this->verificarContem($resposta, 'Cadastro de receita');
+    }
 
-    // public function testeEditarLogado()
-    // {
-    //     $usuarioLogado = $this->logar();
-    //     $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioLogado->getId()))->salvar();
+    public function testeEditarLogado()
+    {
+        $usuarioLogado = $this->logar();
+        $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioLogado->getId()))->salvar();
 
-    //     $resposta = $this->get(URL_RAIZ . 'receitas/editar/' . $receita->getId() . '?');
-    //     $this->verificarContem($resposta, 'Editar receita');
-    // }
+        $resposta = $this->get(URL_RAIZ . 'receitas/editar/' . $receita->getId() . '?');
+        $this->verificarContem($resposta, 'Editar receita');
+    }
 
     // public function testeEditarDeslogado()
     // {
@@ -56,56 +57,56 @@ class TesteReceitas extends Teste
     //     $this->verificar(strpos($resposta['html'], 'Login'));
     // }
 
-    // public function testeArmazenar()
-    // {
-    //     $this->logar();
+    public function testeArmazenar()
+    {
+        $this->logar();
 
-    //     $resposta = $this->post(URL_RAIZ . 'receitas/cadastrar', [
-    //         'nome' => 'Strogonoff',
-    //         'categoria' => 'carnes',
-    //         'ingredientes' => 'Carne bovina, cebola, alho',
-    //         'modo_de_preparo' => 'colocar tudo no fogo',
-    //         'data_receita' => '2022-06-30 03:20:52'
-    //     ]);
+        $resposta = $this->post(URL_RAIZ . 'receitas/cadastrar', [
+            'nome' => 'Strogonoff',
+            'categoria' => 'carnes',
+            'ingredientes' => 'Carne bovina, cebola, alho',
+            'modo_de_preparo' => 'colocar tudo no fogo',
+            'data_receita' => '2022-06-30 03:20:52'
+        ]);
 
-    //     $this->verificarRedirecionar($resposta, URL_RAIZ . 'receitas');
-    //     $resposta = $this->get(URL_RAIZ . 'usuario/receitas');
-    //     $this->verificarContem($resposta, 'Receita cadastrada com sucesso.');
+        $this->verificarRedirecionar($resposta, URL_RAIZ . 'usuario/receitas');
+        $resposta = $this->get(URL_RAIZ . 'usuario/receitas');
+        $this->verificarContem($resposta, 'Receita cadastrada com sucesso.');
 
-    //     $query = DW3BancoDeDados::query('SELECT * FROM receitas');
-    //     $bdReceitas = $query->fetchAll();
-    //     $this->verificar(count($bdReceitas) == 1);
-    // }
+        $query = DW3BancoDeDados::query('SELECT * FROM receitas');
+        $bdReceitas = $query->fetchAll();
+        $this->verificar(count($bdReceitas) == 1);
+    }
 
-    // public function testeAtualizar()
-    // {
-    //     $usuarioLogado = $this->logar();
-    //     $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-02', $usuarioLogado->getId()))->salvar();
+    public function testeAtualizar()
+    {
+        $usuarioLogado = $this->logar();
+        $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-02', $usuarioLogado->getId()))->salvar();
 
-    //     $resposta = $this->patch(URL_RAIZ . 'receitas/editar/' . $receita->getId(), [
-    //         'nome' => 'Strogonoff',
-    //         'categoria' => 'carnes',
-    //         'ingredientes' => 'Carne bovina, cebola, alho',
-    //         'modo_de_preparo' => 'colocar tudo no fogo',
-    //         'data_receita' => '2022-06-30 03:20:52'
-    //     ]);
+        $resposta = $this->patch(URL_RAIZ . 'receitas/editar/' . $receita->getId(), [
+            'nome' => 'Strogonoff',
+            'categoria' => 'carnes',
+            'ingredientes' => 'Carne bovina, cebola, alho',
+            'modo_de_preparo' => 'colocar tudo no fogo',
+            'data_receita' => '2022-06-30 03:20:52'
+        ]);
 
-    //     $this->verificarRedirecionar($resposta, URL_RAIZ . 'usuario/receitas');
-    //     $resposta = $this->get(URL_RAIZ . 'usuario/receitas');
-    //     $this->verificarContem($resposta, 'Receita editada com sucesso.');
+        $this->verificarRedirecionar($resposta, URL_RAIZ . 'usuario/receitas');
+        $resposta = $this->get(URL_RAIZ . 'usuario/receitas');
+        $this->verificarContem($resposta, 'Receita editada com sucesso.');
 
-    //     $receitaEditada = Receita::buscarId($receita->getId());
-    //     $this->verificar($receitaEditada->getNomeReceita() == 'Strogonoff');
-    //     $this->verificar($receitaEditada->getIngredientes() == 'Carne bovina, cebola, alho');
-    //     $this->verificar($receitaEditada->getModoDePreparo() == 'colocar tudo no fogo');
-    // }
+        $receitaEditada = Receita::buscarId($receita->getId());
+        $this->verificar($receitaEditada->getNomeReceita() == 'Strogonoff');
+        $this->verificar($receitaEditada->getIngredientes() == 'Carne bovina, cebola, alho');
+        $this->verificar($receitaEditada->getModoDePreparo() == 'colocar tudo no fogo');
+    }
 
     // public function testeDestruir()
     // {
     //     $usuarioLogado = $this->logar();
-    //     $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-02', $usuarioLogado->getId()))->salvar();
+    //     $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioLogado->getId()))->salvar();
 
-    //     $resposta = $this->delete(URL_RAIZ . 'usuario/receitas/' . $receita->getId());
+    //     $resposta = $this->delete(URL_RAIZ . 'receitas/deletar/' . $receita->getId());
     //     $this->post($resposta, URL_RAIZ . 'usuario/receitas');
 
     //     $resposta = $this->get(URL_RAIZ . 'usuario/receitas');
