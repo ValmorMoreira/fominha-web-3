@@ -29,7 +29,6 @@ class TesteReceitas extends Teste
     //     $this->verificarContem($resposta, 'Filtrar por ingrediente');
     // }
 
- 
 
     public function testeCriarLogado()
     {

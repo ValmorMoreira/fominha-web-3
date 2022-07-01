@@ -13,24 +13,28 @@ class UsuarioControlador extends Controlador
     {
 
         $usuario = $this->getUsuarioSessao();
-
+        
         $this->visao('usuario/criar.php',[
-            'usuario' => $usuario
+            'usuario' => $usuario,
         ]);
     }
 
     public function armazenar()
     {
-        $usuario = new Usuario($_POST['nome'], $_POST['email'], $_POST['senha']);
         
-        if ($usuario->isValido()) {
+        $usuario = new Usuario($_POST['nome'], $_POST['email'], $_POST['senha']);
+
+        if ($usuario->isValido()) {           
             $usuario->salvar();
             DW3Sessao::setFlash('mensagem', 'Usuário Cadastrado com sucesso.');
-            $this->redirecionar(URL_RAIZ . 'usuario/sucesso');            
-        } else {
-            $this->setErros($usuario->getValidacaoErros());
-            $this->visao('usuario/criar.php');
+            $this->redirecionar(URL_RAIZ . 'usuario/sucesso');                                        
         }
+            
+            $this->setErros($usuario->getValidacaoErros());
+            $this->visao('usuario/criar.php',[
+                'usuario' => $usuario,
+            ]);
+
     }
 
     public function sucesso()

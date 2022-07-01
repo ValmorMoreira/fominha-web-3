@@ -1,6 +1,8 @@
 <main class="register">
+
         <!-- Formulário de cadastro -->
             <div class="card-panel-new">
+    
                 <form id="cadastro" action="<?= URL_RAIZ . 'cadastro' ?>" method="post" >
                     <h3>Cadastro</h3>
                     <div class="input-field invalid col s12 m10 offset-m1 <?= $this->getErroCss('nome') ?>">

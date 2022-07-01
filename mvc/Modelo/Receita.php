@@ -347,26 +347,25 @@ class Receita extends Modelo
 
     //Teste que não deu certo, ainda vou arrumar kkkkkk 
 
-    public static function buscarRegistros($filtro = [])
-    {
-        $sqlWhere = '';
-        $orderBy = 'DESC';
-        $parametros = [];
-        if (array_key_exists('busca', $filtro) && $filtro['busca'] != '') {
-            $parametros[] = $filtro['busca'];
-            $sqlWhere .= ' AND r.ingredientes LIKE ?';
-        }
+    // public static function buscarRegistros($filtro = [])
+    // {
+    //     $sqlWhere = '';
+    //     $orderBy = 'DESC';
+    //     $parametros = [];
+    //     if (array_key_exists('busca', $filtro) && $filtro['busca'] != '') {
+    //         $parametros[] = $filtro['busca'];
+    //         $sqlWhere .= ' AND r.ingredientes LIKE ?';
+    //     }
 
-        $sql = self::BUSCAR_INGREDIENTE_TRUE . $sqlWhere . ' ORDER BY r.ingredientes' . ' ' . $orderBy;
-        $comando = DW3BancoDeDados::prepare($sql);
-        foreach ($parametros as $i => $parametro) {
-            $comando->bindValue($i + 1, "%$parametro%", PDO::PARAM_STR);
-        }
-        $comando->execute();
-        $registros = $comando->fetchAll();
-        return $registros;
-    }
-    ////
+    //     $sql = self::BUSCAR_INGREDIENTE_TRUE . $sqlWhere . ' ORDER BY r.ingredientes' . ' ' . $orderBy;
+    //     $comando = DW3BancoDeDados::prepare($sql);
+    //     foreach ($parametros as $i => $parametro) {
+    //         $comando->bindValue($i + 1, "%$parametro%", PDO::PARAM_STR);
+    //     }
+    //     $comando->execute();
+    //     $registros = $comando->fetchAll();
+    //     return $registros;
+    // }
 
     protected function verificarErros()
     {

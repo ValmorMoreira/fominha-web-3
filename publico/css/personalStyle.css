@@ -173,16 +173,18 @@ h4 {
 
   .a-pagination{
     text-align: center;
-    margin-left: 50;
     width: 115px;
     height: 25px;
     background: #b71c1c;
-    text-align: center;
     border-radius: 5px;
     color: rgb(243, 243, 243);
     font-weight: bold;
     line-height: 25px;
     padding: 18px;
+  }
+
+  .a-pagination:hover{
+    background: #0018a3;
   }
 
   .alert {

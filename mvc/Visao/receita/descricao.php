@@ -7,23 +7,20 @@
     <?php endif ?>
 
     <div class="container">
-        <form class="col s12" action="<?= URL_RAIZ . 'receita/descricao/id=' . $receita->getId() ?>" method="post">
+        <form action="<?= URL_RAIZ . 'receita/descricao/id=' . $receita->getId() ?>" method="post">
             <div class="row" style="background-color: rgba(255, 255, 255, 0.301);">
                 <div class="card-panel red darken-4  col s12">
-                    <div class="col s6">
                         <span class="white-text">
-                            <h4><?= $receita->getNomeReceita() ?></h4>
-                            <h5> Categoria: <?= $receita->getCategoria() ?></h5>
+                            <h4 class="center-align"> <?= $receita->getNomeReceita() ?></h4>
+                            <h5 class="center-align"> Categoria: <?= $receita->getCategoria() ?></h5>
                         </span>
-                    </div>
-
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col s6">
-                            <img class="materialboxed align-center" width="100%" src="<?= URL_IMG . $receita->getImagem() ?> ">
-                        </div>
-                        <div class="col s6">
+                <div class="row">
+                    <div class="col s10 offset-s3">
+                        <img class="materialboxed" width="65%" src="<?= URL_IMG . $receita->getImagem() ?> ">
+                        <span style="color: white;"><i>Imagem meramente ilustrativa</i></span>
+                    </div>
+                    <div class="col s12">
                             <div class="card-panel red darken-4">
                                 <span class="white-text">
                                     <h4>Ingredientes</h4>
@@ -34,7 +31,6 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
                 </div>
 
                 <div class="col s12">
@@ -76,9 +72,8 @@
                                             </button>
                                         </form>
                                 </li>
-                            <?php endif ?>
-                        <?php endforeach ?>
-
+                                    <?php endif ?>
+                            <?php endforeach ?>
                         </ul>
                     </div>
                 </div>

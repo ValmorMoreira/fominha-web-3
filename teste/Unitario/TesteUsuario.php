@@ -10,7 +10,7 @@ class TesteUsuario extends Teste
 {
     public function testeInserir()
     {
-        $usuario = (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+        $usuario = $this->criarUmUsuario();
 
         $query = DW3BancoDeDados::query('SELECT * FROM usuarios WHERE id = ' . $usuario->getId());
 
@@ -21,15 +21,28 @@ class TesteUsuario extends Teste
 
     public function testeBuscarEmail()
     {
-       (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+       $this->criarUmUsuario();
 
-        $usuarioLogin = Usuario::buscarEmail('valmor@teste.com');
+       $email = 'valmor@teste.com';
+
+        $usuarioLogin = Usuario::buscarEmail($email);
+        $this->verificar($usuarioLogin != null);
+    }
+
+    public function testeBuscarNome()
+    {
+        $this->criarUmUsuario();
+
+       $nome = 'Valmor';
+
+        $usuarioLogin = Usuario::buscarNome($nome);
         $this->verificar($usuarioLogin != null);
     }
 
     public function testeBuscarPorId()
     {
-        $usuario = (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+        $usuario = $this->criarUmUsuario();
+
         $usuarioBusca = Usuario::buscarId($usuario->getId());
 
         $this->verificar($usuario->getId() == $usuarioBusca->getId());
@@ -37,11 +50,22 @@ class TesteUsuario extends Teste
 
     public function testeContarTodos()
     {
-        (new Usuario('Admin', 'admin@google.com', 'master2022'))->salvar();
-        (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
-        (new Usuario('Batman', 'batman@gotham.com', 'morcego'))->salvar();
+       $this->criarUsuarios();
 
         $totalDeUsuarios = Usuario::contarTodos();
         $this->verificar($totalDeUsuarios == 3);
+    }
+
+    public function criarUsuarios(){
+
+        (new Usuario('Admin', 'admin@google.com', 'master2022'))->salvar();
+        (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+        (new Usuario('Batman', 'batman@gotham.com', 'morcego'))->salvar();
+    }
+
+    public function criarUmUsuario(){
+
+        $usuario = (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+        return $usuario;
     }
 }

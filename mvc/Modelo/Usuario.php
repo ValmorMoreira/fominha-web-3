@@ -116,6 +116,25 @@ class Usuario extends Modelo
         return $objeto;
     }
 
+    public static function buscarNome($nome)
+    {
+        $comando = DW3BancoDeDados::prepare(self::BUSCAR_POR_NOME);
+        $comando->bindValue(1, $nome, PDO::PARAM_STR);
+        $comando->execute();
+        $objeto = null;
+        $registro = $comando->fetch();
+        if ($registro) {
+            $objeto = new Usuario(
+                $registro['nome'],
+                $registro['email'],
+                '',
+                $registro['id']
+            );
+            $objeto->senha = $registro['senha'];
+        }
+        return $objeto;
+    }
+
     public static function contarTodos()
     {
         $registros = DW3BancoDeDados::query(self::CONTAR_TODOS);
@@ -141,15 +160,22 @@ class Usuario extends Modelo
 
     protected function verificarErros()
     {
-        
-        if (strlen($this->nome) == null) {
-            $this->setErroMensagem('email', 'Campo e-mail não pode ser vazio');
+        $emailUsuario = $_POST['email'];        
+       
+        if (strlen($this->nome) > 9) {
+            $this->setErroMensagem('nome', 'Nome muito longo, por favor abreviar.');
         }
-        if (strlen($this->nome) < 5) {
-            $this->setErroMensagem('nome', 'O nome deve ter no mínimo 5 caracteres.');
+        if (strlen($this->nome) < 3) {
+            $this->setErroMensagem('nome', 'O nome deve ter no mínimo 3 caracteres.');
+        }
+        if (strlen($this->nome) == null) {
+            $this->setErroMensagem('nome', 'Campo nome não pode ser vazio');
         }
         if (strlen($this->email) == null) {
             $this->setErroMensagem('email', 'Campo e-mail não pode ser vazio');
+        }
+        if (Usuario::buscarEmail($emailUsuario)) {
+            $this->setErroMensagem('email', 'E-mail já cadastrado!');
         }
         if (strlen($this->senhaPlana) < 5) {
             $this->setErroMensagem('senha', 'A senha deve ter no mínimo 5 caracteres.');

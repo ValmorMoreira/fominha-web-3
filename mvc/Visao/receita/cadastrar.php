@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="file-field input-field col s6">
-                            <div class="btn green darken-2">
+                            <div class="btn blue darken-4">
                                 <span>Carregar imagem</span>
                                 <input name="foto" id="foto" type="file">
                             </div>
