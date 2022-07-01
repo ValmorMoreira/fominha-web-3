@@ -40,7 +40,7 @@
                         <div class="card z-depth-2">
                             <div class="card-image">
                                 <a href="<?= URL_RAIZ . 'receita/descricao/id=' . $receita->getId() ?>">
-                                    <img name="foto" src="<?= URL_IMG . $receita->getImagem() ?> ">
+                                    <img class="list-image" name="foto" src="<?= URL_IMG . $receita->getImagem() ?> ">
                                 </a>
                             </div>
                             <div class="card-link grey lighten-5" style="padding:8px;">
@@ -61,7 +61,8 @@
         </div>
     </div>
 
-<?php if (count($receitas) != 0) : ?>
+   
+<?php if (!$busca) : ?>
     <!--Paginação-->
     <div class="container">
         <div class="row col s12">
@@ -78,5 +79,26 @@
         </div>
     </div>
 <?php endif ?>
+
+<?php if($busca): ?>    
+    <!--Paginação-->
+    <div class="container">
+        <div class="row col s12">
+            <?php if ($pagina > 1) : ?> 
+                <div class="col s6 push-s3">
+                    <a class="a-pagination" href="<?= URL_RAIZ . 'receitas?' . $busca . 'p=' . ($pagina - 1) ?>">Página anterior</a>
+                    <input hidden name="busca" value="<?= $busca?>">
+                </div>
+            <?php endif ?>
+            <?php if ($pagina < $ultimaPagina) : ?>
+                    <div class="col s6 push-s1">
+                       <a class="a-pagination" href="<?= URL_RAIZ . 'receitas?' . $busca . 'p=' . ($pagina + 1) ?>">Próxima página</a>
+                       <input hidden name="busca" value="<?= $busca ?>">
+                    </div>
+            <?php endif ?>               
+        </div>
+    </div>
+<?php endif ?>
+
 
 </main>

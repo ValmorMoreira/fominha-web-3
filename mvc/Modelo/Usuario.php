@@ -162,7 +162,7 @@ class Usuario extends Modelo
     {
         $emailUsuario = $_POST['email'];        
        
-        if (strlen($this->nome) > 9) {
+        if (strlen($this->nome) > 15) {
             $this->setErroMensagem('nome', 'Nome muito longo, por favor abreviar.');
         }
         if (strlen($this->nome) < 3) {

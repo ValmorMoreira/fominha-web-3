@@ -9,29 +9,7 @@ use \Modelo\Comentario;
 class ReceitaControlador extends Controlador
 {
 
-    public function optionDinamico(){
-
-        $opcao = '';
-
-        switch($opcao){
-            case 1 : $opcao = 'Bolos';
-            break;
-            case 2 : $opcao = 'Carnes';
-            break;
-            case 3 : $opcao = 'Doces';
-            break;
-            case 4 : $opcao = 'Massas';
-            break;
-            case 5 : $opcao = 'Sobremesas';
-            break;
-            case 6 : $opcao = 'Variedades';
-            break;
-            default: $opcao = null;
-        }
-
-        return $opcao;
-    }
-  
+ 
     public function index()
     {
         $usuario = $this->getUsuarioSessao();
@@ -41,7 +19,7 @@ class ReceitaControlador extends Controlador
         
 
         if ($sqlQuery) {
-            $paginacao = $this->calcularPaginacao("buscarPorIngrediente", "contarTodos",  $orderBy, $sqlQuery);
+            $paginacao = $this->calcularPaginacao("buscarTodos", "contarFiltro",  $orderBy, $sqlQuery);
         }else{
             $paginacao = $this->calcularPaginacao("buscarTodos", "contarTodos", $orderBy);
         }
@@ -50,8 +28,8 @@ class ReceitaControlador extends Controlador
             'mensagem' => DW3Sessao::getFlash('mensagem'),
             'receitas' => $paginacao['receitas'],
             'pagina' => $paginacao['pagina'],
-            'ultimaPagina' => $paginacao['ultimaPagina'],
-            'busca' => $sqlQuery,
+            'ultimaPagina' => $paginacao['ultimaPagina'], 
+            'busca' => $sqlQuery,          
             'ordenar' => $orderBy,
             'usuario' => $usuario
             ]);

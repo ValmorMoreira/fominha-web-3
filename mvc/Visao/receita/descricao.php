@@ -17,7 +17,7 @@
                 </div>
                 <div class="row">
                     <div class="col s10 offset-s3">
-                        <img class="materialboxed" width="65%" src="<?= URL_IMG . $receita->getImagem() ?> ">
+                        <img class="materialboxed" width="55%" src="<?= URL_IMG . $receita->getImagem() ?> ">
                         <span style="color: white;"><i>Imagem meramente ilustrativa</i></span>
                     </div>
                     <div class="col s12">

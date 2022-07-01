@@ -144,5 +144,8 @@ class Comentario extends Modelo
         if (strlen($this->comentario) < 10) {
             $this->setErroMensagem('comentario', 'Campo comentário precisa ter no mínimo 10 caracteres.');
         }
+        if (strlen($this->comentario) == null) {
+            $this->setErroMensagem('comentario', 'Campo comentário não pode ser vazio.');
+        }
     }
 }

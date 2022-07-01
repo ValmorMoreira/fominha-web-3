@@ -21,6 +21,9 @@ class Receita extends Modelo
     const BUSCAR_INGREDIENTE = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id) WHERE r.ingredientes LIKE ? ORDER BY r.data_receita DESC LIMIT ? OFFSET ?';
     const BUSCAR_INGREDIENTE_TRUE = 'SELECT r.nome, r.categoria, r.ingredientes, r.modo_de_preparo, r.data_receita, r.id r_id, u.nome u_nome, u.email, u.id u_id FROM receitas r JOIN usuarios u ON (r.usuario_id = u.id) WHERE TRUE';
     
+    const CONTAR_FILTRO = 'SELECT count(id) FROM receitas WHERE ingredientes LIKE lower(';
+    const CONTAR_FILTRO2 = ")";
+
     private $id;
     private $nome;
     private $categoria;
@@ -218,40 +221,6 @@ class Receita extends Modelo
         );
     }
 
-    public static function buscarTodos($limit = 4, $offset = 0, $orderBy = 'desc')
-    {
-        if ($orderBy == 'asc') {
-            $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_ASC);
-        } else {
-            $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
-        }
-
-        $comando->bindValue(1, $limit, PDO::PARAM_INT);
-        $comando->bindValue(2, $offset, PDO::PARAM_INT);
-        $comando->execute();
-        $registros = $comando->fetchAll();
-        $objetos = [];
-        foreach ($registros as $registro) {
-            $usuario = new Usuario(
-                $registro['u_nome'],
-                '',
-                $registro['u_id']
-            );
-            $objetos[] = new Receita(
-                $registro['nome'],
-                $registro['categoria'],
-                $registro['ingredientes'],
-                $registro['modo_de_preparo'],
-                $registro['data_receita'],
-                $registro['u_id'],
-                $usuario,
-                null,
-                $registro['r_id']
-            );
-        }
-        return $objetos;
-    }
-
     public static function buscar()
     {
         $registros = DW3BancoDeDados::query(self::BUSCAR);
@@ -314,6 +283,78 @@ class Receita extends Modelo
         return intval($total[0]);
     }
 
+    public static function contarFiltro($filtro)
+    {
+        $comando = self::CONTAR_FILTRO . "'%" . $filtro . "%' )";
+        $registros = DW3BancoDeDados::query($comando);
+        $total = $registros->fetch();
+        return intval($total[0]);
+    }
+
+    public static function buscarTodos($limit = 4, $offset = 0, $orderBy = 'desc', $filtro = null)
+    {
+        if ($orderBy == 'asc') {
+            $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_ASC);
+        } else {
+            $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+        }
+
+        if(!$filtro){
+            $comando->bindValue(1, $limit, PDO::PARAM_INT);
+            $comando->bindValue(2, $offset, PDO::PARAM_INT);
+            $comando->execute();
+            $registros = $comando->fetchAll();
+            $objetos = [];
+            foreach ($registros as $registro) {
+                $usuario = new Usuario(
+                    $registro['u_nome'],
+                    '',
+                    $registro['u_id']
+                );
+                $objetos[] = new Receita(
+                    $registro['nome'],
+                    $registro['categoria'],
+                    $registro['ingredientes'],
+                    $registro['modo_de_preparo'],
+                    $registro['data_receita'],
+                    $registro['u_id'],
+                    $usuario,
+                    null,
+                    $registro['r_id']
+                );
+            }
+            return $objetos;
+        }else{
+
+        $comando = DW3BancoDeDados::prepare(self::BUSCAR_INGREDIENTE);
+        $comando->bindValue(1, "%$filtro%", PDO::PARAM_STR);
+        $comando->bindValue(2, $limit, PDO::PARAM_INT);
+        $comando->bindValue(3, $offset, PDO::PARAM_INT);
+        $comando->execute();
+        $registros = $comando->fetchAll();
+        $objetos = [];
+        foreach ($registros as $registro) {
+            $usuario = new Usuario(
+                $registro['u_nome'],
+                '',
+                $registro['u_id']
+            );
+            $objetos[] = new Receita(
+                $registro['nome'],
+                $registro['categoria'],
+                $registro['ingredientes'],
+                $registro['modo_de_preparo'],
+                $registro['data_receita'],
+                $registro['u_id'],
+                $usuario,
+                null,
+                $registro['r_id']
+            );
+        }
+        return $objetos;
+        }
+       
+    }
 
     public static function buscarPorIngrediente($limit = 2, $offset = 0, $busca = '')
     {
@@ -345,28 +386,7 @@ class Receita extends Modelo
         return $objetos;
     }
 
-    //Teste que não deu certo, ainda vou arrumar kkkkkk 
-
-    // public static function buscarRegistros($filtro = [])
-    // {
-    //     $sqlWhere = '';
-    //     $orderBy = 'DESC';
-    //     $parametros = [];
-    //     if (array_key_exists('busca', $filtro) && $filtro['busca'] != '') {
-    //         $parametros[] = $filtro['busca'];
-    //         $sqlWhere .= ' AND r.ingredientes LIKE ?';
-    //     }
-
-    //     $sql = self::BUSCAR_INGREDIENTE_TRUE . $sqlWhere . ' ORDER BY r.ingredientes' . ' ' . $orderBy;
-    //     $comando = DW3BancoDeDados::prepare($sql);
-    //     foreach ($parametros as $i => $parametro) {
-    //         $comando->bindValue($i + 1, "%$parametro%", PDO::PARAM_STR);
-    //     }
-    //     $comando->execute();
-    //     $registros = $comando->fetchAll();
-    //     return $registros;
-    // }
-
+    
     protected function verificarErros()
     {
         if (strlen($this->nome) < 5) {

@@ -41,17 +41,25 @@ abstract class Controlador extends DW3Controlador
     protected function calcularPaginacao($busca, $quantidade, $orderBy = 'desc', $sqlQuery = null)
     {
         $pagina = array_key_exists('p', $_GET) ? intval($_GET['p']) : 1;
-        $limit = 3;
-        $offset = ($pagina - 1) * $limit;
 
-        if ($sqlQuery) {
-            $receitas = Receita::$busca($limit, $offset, $sqlQuery);
-        } else {
-            $receitas = Receita::$busca($limit, $offset, $orderBy);
+            $limit = 6;
+            $offset = ($pagina - 1) * $limit;
+            $receitas = Receita::$busca($limit, $offset, $orderBy, $sqlQuery); 
+
+        // if ($sqlQuery) {
+        //     $receitas = Receita::$busca($limit, $offset, $orderBy, $sqlQuery);
+        // } else {
+        //     $receitas = Receita::$busca($limit, $offset, $orderBy);
+        // }
+
+        if($sqlQuery != null){
+            $ultimaPagina = ceil(Receita::$quantidade($sqlQuery) / $limit);
+        return compact('busca', 'pagina', 'receitas', 'ultimaPagina');
+        }else{
+            $ultimaPagina = ceil(Receita::$quantidade() / $limit);
+            return compact('pagina', 'receitas', 'ultimaPagina');
         }
-
-        $ultimaPagina = ceil(Receita::$quantidade() / $limit);
-        return compact('pagina', 'receitas', 'ultimaPagina');
+        
     }
 
 }

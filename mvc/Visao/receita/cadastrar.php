@@ -28,6 +28,7 @@
                                     <option value="variedades">Variedades</option>
                                     <option value="vegetariano">Vegetariano</option>                                    
                                 </select>
+                                <label for="categoria">Categoria</label>
                             </div>
                             <?php $this->incluirVisao('util/formErro.php', ['campo' => 'categoria']) ?>
                         </div>
