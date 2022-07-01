@@ -5,7 +5,6 @@ use \Teste\Teste;
 use \Modelo\Receita;
 use \Modelo\Usuario;
 use \Framework\DW3BancoDeDados;
-use \Framework\DW3Sessao;
 
 class TesteReceitas extends Teste
 {
@@ -15,20 +14,19 @@ class TesteReceitas extends Teste
         $this->verificarContem($resposta, 'Filtrar por ingrediente');
     }
 
-    // public function testeCriarDeslogado()
-    // {
-    //     $resposta = $this->get(URL_RAIZ . 'receitas/cadastrar');
-    //     $this->verificarContem($resposta, 'Não tem cadastro? Crie agora.');
-    // }
+    public function testeListagemLogado()
+    {
+        $this->logar();
 
-    // public function testeListagemLogado()
-    // {
-    //     $this->logar();
+        $resposta = $this->get(URL_RAIZ . 'receitas');
+        $this->verificarContem($resposta, 'Filtrar por ingrediente');
+    }
 
-    //     $resposta = $this->get(URL_RAIZ . 'receitas');
-    //     $this->verificarContem($resposta, 'Filtrar por ingrediente');
-    // }
-
+    public function testeCriarDeslogado()
+    {
+        $resposta = $this->get(URL_RAIZ . 'receitas/cadastrar');
+        $this->verificarRedirecionar($resposta, URL_RAIZ . 'login');
+    }
 
     public function testeCriarLogado()
     {
@@ -47,14 +45,14 @@ class TesteReceitas extends Teste
         $this->verificarContem($resposta, 'Editar receita');
     }
 
-    // public function testeEditarDeslogado()
-    // {
-    //     $usuarioReceita = (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
-    //     $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioReceita->getId()))->salvar();
+    public function testeEditarDeslogado()
+    {
+        $usuarioReceita = (new Usuario('Valmor', 'valmor@teste.com', '12345'))->salvar();
+        (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioReceita->getId()))->salvar();
 
-    //     $resposta = $this->get(URL_RAIZ . 'receitas/editar/' . $receita->getId());
-    //     $this->verificar(strpos($resposta['html'], 'Login'));
-    // }
+        $resposta = $this->get(URL_RAIZ . 'login');
+        $this->verificar(strpos($resposta['html'], 'Login'));
+    }
 
     public function testeArmazenar()
     {
@@ -100,18 +98,20 @@ class TesteReceitas extends Teste
         $this->verificar($receitaEditada->getModoDePreparo() == 'colocar tudo no fogo');
     }
 
-    // public function testeDestruir()
-    // {
-    //     $usuarioLogado = $this->logar();
-    //     $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioLogado->getId()))->salvar();
+    public function testeDestruir()
+    {
+        $usuarioLogado = $this->logar();
+        $receita = (new Receita('Carne de panela', 'carnes', 'carne de gado, molho, tempero', 'colocar tudo na panela', '2022-06-30 03:20:52', $usuarioLogado->getId()))->salvar();
 
-    //     $resposta = $this->delete(URL_RAIZ . 'receitas/deletar/' . $receita->getId());
-    //     $this->post($resposta, URL_RAIZ . 'usuario/receitas');
+        $deletarReceita = $receita->getId();
 
-    //     $resposta = $this->get(URL_RAIZ . 'usuario/receitas');
-    //     $this->verificarContem($resposta, 'Receita deletada com sucesso.');
+        $resposta = $this->delete(URL_RAIZ . 'receitas/deletar/' . $deletarReceita);
+        $this->verificarRedirecionar($resposta, URL_RAIZ . 'usuario/receitas');
 
-    //     $receitaEditada = Receita::buscarId($receita->getId());
-    //     $this->verificar($receitaEditada == null);
-    // }
+        $resposta = $this->get(URL_RAIZ . 'usuario/receitas');
+        $this->verificarContem($resposta, 'Minhas receitas');
+
+        $receitaDeletada = Receita::buscarTodos();
+        $this->verificar(count($receitaDeletada) == 0);
+    }
 }
