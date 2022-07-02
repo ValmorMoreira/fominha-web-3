@@ -27,10 +27,10 @@ class TesteUsuarios extends Teste
         $bdUsuarios = $query->fetchAll();
         $this->verificar(count($bdUsuarios) == 1);
 
-        $this->deleteUsers();
+        $this->deleteUser();
     }
 
-    public function deleteUsers(){
+    public function deleteUser(){
         DW3BancoDeDados::query('DELETE FROM usuarios WHERE email = "tonho@teste.com"');
     }
 }

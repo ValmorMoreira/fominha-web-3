@@ -219,6 +219,8 @@ class Receita extends Modelo
             null,
             $registro['id'],
         );
+
+        return null;
     }
 
     public static function buscar()

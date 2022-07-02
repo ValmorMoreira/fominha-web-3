@@ -5,6 +5,7 @@ use \Teste\Teste;
 use \Modelo\Receita;
 use \Modelo\Usuario;
 use \Framework\DW3BancoDeDados;
+use \Framework\DW3Sessao;
 
 class TesteReceitas extends Teste
 {
