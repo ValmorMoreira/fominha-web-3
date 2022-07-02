@@ -80,20 +80,25 @@
     </div>
 <?php endif ?>
 
-<?php if($busca): ?>    
+<?php if($busca): ?>
     <!--Paginação-->
     <div class="container">
         <div class="row col s12">
             <?php if ($pagina > 1) : ?> 
                 <div class="col s6 push-s3">
-                    <a class="a-pagination" href="<?= URL_RAIZ . 'receitas?' . $busca . 'p=' . ($pagina - 1) ?>">Página anterior</a>
-                    <input hidden name="busca" value="<?= $busca?>">
+                    <form action="<?= URL_RAIZ . 'receitas?busca=' . $busca . '&p=' . ($pagina - 1) ?>" method="POST">
+                        <button type="submit" class="btn red darken-4">Página anterior</a>
+                        <input hidden name="busca" value="<?= $busca?>">
+                    </form>
+                   
                 </div>
             <?php endif ?>
             <?php if ($pagina < $ultimaPagina) : ?>
                     <div class="col s6 push-s1">
-                       <a class="a-pagination" href="<?= URL_RAIZ . 'receitas?' . $busca . 'p=' . ($pagina + 1) ?>">Próxima página</a>
-                       <input hidden name="busca" value="<?= $busca ?>">
+                        <form action="<?= URL_RAIZ . 'receitas?busca=' . $busca . '&p=' . ($pagina + 1) ?>" method="POST">
+                            <button  class="btn red darken-4" type="submit">Próxima página</a>
+                            <input hidden name="busca" value="<?= $busca ?>">
+                        </form>                       
                     </div>
             <?php endif ?>               
         </div>

@@ -42,7 +42,7 @@ abstract class Controlador extends DW3Controlador
     {
         $pagina = array_key_exists('p', $_GET) ? intval($_GET['p']) : 1;
 
-            $limit = 6;
+            $limit = 3;
             $offset = ($pagina - 1) * $limit;
             $receitas = Receita::$busca($limit, $offset, $orderBy, $sqlQuery); 
 

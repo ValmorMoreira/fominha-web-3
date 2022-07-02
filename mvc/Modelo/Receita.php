@@ -287,7 +287,7 @@ class Receita extends Modelo
 
     public static function contarFiltro($filtro)
     {
-        $comando = self::CONTAR_FILTRO . "'%" . $filtro . "%' )";
+        $comando = self::CONTAR_FILTRO . "'%" . $filtro . "%'" . self::CONTAR_FILTRO2;
         $registros = DW3BancoDeDados::query($comando);
         $total = $registros->fetch();
         return intval($total[0]);

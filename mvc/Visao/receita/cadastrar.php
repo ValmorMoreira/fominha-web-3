@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="col s6">
-                            <p><strong>O envio da imagem é opcional*</strong></p>
+                            <p><strong>O envio da imagem (png) é opcional*</strong></p>
                         </div>
                         <button class="btn-large green darken-4 waves-effect waves-light" style="width:100%"
                             type="submit" name="register_recipes">
