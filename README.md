@@ -8,7 +8,4 @@
 
 #### Projeto em desenvolvimento para disciplina de Programação para Web 3 (UTFPR) 
 
-- No momento atual algumas correções aplicadas, ainda faltam os testes.
-
- ##### Desenvolvido por Valmor Moreira.
-
+- Ainda aplicando alguns "updates" para melhorar a qualidade final do software.
