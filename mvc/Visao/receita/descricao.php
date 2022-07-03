@@ -1,10 +1,5 @@
 <main>
-    <?php if ($mensagem) : ?>
-        <div class="alert">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <?= $mensagem ?>
-        </div>
-    <?php endif ?>
+   
 
     <div class="container">
         <form action="<?= URL_RAIZ . 'receita/descricao/id=' . $receita->getId() ?>" method="post">
@@ -32,11 +27,18 @@
                             </div>
                         </div>
                 </div>
-
+                
+                <?php if ($mensagem) : ?>
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <?= $mensagem ?>
+        </div>
+    <?php endif ?>
+    
                 <div class="col s12">
                     <div class="card-panel red darken-4">
                         <span class="white-text">
-                            <h4 style="text-align:center">Comentários</h4>
+                            <a href="#comentario"><h4 style="text-align:center">Comentários</h4></a>
                         </span>
 
                         <form name="comentarios" class="col s12" action="" method="POST">

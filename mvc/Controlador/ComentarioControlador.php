@@ -20,11 +20,11 @@ class ComentarioControlador extends Controlador
         if ($comentario->isValido()) {
             $comentario->salvar();
             DW3Sessao::setFlash('mensagem', 'Comentário cadastrado com sucesso!');
-            $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
+            $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId . '#comentario');
         } else {
             DW3Sessao::setFlash('mensagem', 'O comentário não foi cadastrado!');
             $this->setErros($comentario->getValidacaoErros());            
-            //$this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
+            //$this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId .'#comentario');
             $usuario =  DW3Sessao::get('usuario');
             $receita = Receita::buscarId($receitaId);
             $comentarios = Comentario::buscarTodasPorId($receita->getId());
@@ -59,7 +59,7 @@ class ComentarioControlador extends Controlador
             $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
         } else {
             DW3Sessao::setFlash('mensagem', 'Comentário deletado com sucesso!');
-            $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId);
+            $this->redirecionar(URL_RAIZ . 'receita/descricao/id=' . $receitaId .'#comentario');
         }
     }
 }
