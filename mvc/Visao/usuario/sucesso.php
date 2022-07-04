@@ -2,7 +2,7 @@
 <main>
 
     <?php if ($mensagem) : ?>
-        <div class="alert">
+        <div class="alert container">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
             <?= $mensagem ?>
         </div>
